@@ -1,13 +1,12 @@
 #if defined(ESP32)
 
-#include "safe_boot.h"
+#    include "safe_boot.h"
 
-#include <Arduino.h>
-#include <rom/rtc.h>
-
-#include <SerialStream.h>
-#include <WiFiManager.h>
-#include <upload_ota.h>
+#    include <Arduino.h>
+#    include <SerialStream.h>
+#    include <WiFiManager.h>
+#    include <rom/rtc.h>
+#    include <upload_ota.h>
 
 enum class ResetReason
 {
@@ -47,53 +46,53 @@ void printResetReason(ResetReason reason)
 {
     switch (reason)
     {
-    case ResetReason::POWERON_RESET: /**<1, Vbat power on reset*/
-        Serial.println("POWERON_RESET");
-        break;
-    case ResetReason::SW_RESET: /**<3, Software reset digital core*/
-        Serial.println("SW_RESET");
-        break;
-    case ResetReason::OWDT_RESET: /**<4, Legacy watch dog reset digital core*/
-        Serial.println("OWDT_RESET");
-        break;
-    case ResetReason::DEEPSLEEP_RESET: /**<5, Deep Sleep reset digital core*/
-        Serial.println("DEEPSLEEP_RESET");
-        break;
-    case ResetReason::SDIO_RESET: /**<6, Reset by SLC module, reset digital core*/
-        Serial.println("SDIO_RESET");
-        break;
-    case ResetReason::TG0WDT_SYS_RESET: /**<7, Timer Group0 Watch dog reset digital core*/
-        Serial.println("TG0WDT_SYS_RESET");
-        break;
-    case ResetReason::TG1WDT_SYS_RESET: /**<8, Timer Group1 Watch dog reset digital core*/
-        Serial.println("TG1WDT_SYS_RESET");
-        break;
-    case ResetReason::RTCWDT_SYS_RESET: /**<9, RTC Watch dog Reset digital core*/
-        Serial.println("RTCWDT_SYS_RESET");
-        break;
-    case ResetReason::INTRUSION_RESET: /**<10, Instrusion tested to reset CPU*/
-        Serial.println("INTRUSION_RESET");
-        break;
-    case ResetReason::TGWDT_CPU_RESET: /**<11, Time Group reset CPU*/
-        Serial.println("TGWDT_CPU_RESET");
-        break;
-    case ResetReason::SW_CPU_RESET: /**<12, Software reset CPU*/
-        Serial.println("SW_CPU_RESET");
-        break;
-    case ResetReason::RTCWDT_CPU_RESET: /**<13, RTC Watch dog Reset CPU*/
-        Serial.println("RTCWDT_CPU_RESET");
-        break;
-    case ResetReason::EXT_CPU_RESET: /**<14, for APP CPU, reseted by PRO CPU*/
-        Serial.println("EXT_CPU_RESET");
-        break;
-    case ResetReason::RTCWDT_BROWN_OUT_RESET: /**<15, Reset when the vdd voltage is not stable*/
-        Serial.println("RTCWDT_BROWN_OUT_RESET");
-        break;
-    case ResetReason::RTCWDT_RTC_RESET: /**<16, RTC Watch dog reset digital core and rtc module*/
-        Serial.println("RTCWDT_RTC_RESET");
-        break;
-    default:
-        Serial.println("NO_MEAN");
+        case ResetReason::POWERON_RESET: /**<1, Vbat power on reset*/
+            Serial.println("POWERON_RESET");
+            break;
+        case ResetReason::SW_RESET: /**<3, Software reset digital core*/
+            Serial.println("SW_RESET");
+            break;
+        case ResetReason::OWDT_RESET: /**<4, Legacy watch dog reset digital core*/
+            Serial.println("OWDT_RESET");
+            break;
+        case ResetReason::DEEPSLEEP_RESET: /**<5, Deep Sleep reset digital core*/
+            Serial.println("DEEPSLEEP_RESET");
+            break;
+        case ResetReason::SDIO_RESET: /**<6, Reset by SLC module, reset digital core*/
+            Serial.println("SDIO_RESET");
+            break;
+        case ResetReason::TG0WDT_SYS_RESET: /**<7, Timer Group0 Watch dog reset digital core*/
+            Serial.println("TG0WDT_SYS_RESET");
+            break;
+        case ResetReason::TG1WDT_SYS_RESET: /**<8, Timer Group1 Watch dog reset digital core*/
+            Serial.println("TG1WDT_SYS_RESET");
+            break;
+        case ResetReason::RTCWDT_SYS_RESET: /**<9, RTC Watch dog Reset digital core*/
+            Serial.println("RTCWDT_SYS_RESET");
+            break;
+        case ResetReason::INTRUSION_RESET: /**<10, Instrusion tested to reset CPU*/
+            Serial.println("INTRUSION_RESET");
+            break;
+        case ResetReason::TGWDT_CPU_RESET: /**<11, Time Group reset CPU*/
+            Serial.println("TGWDT_CPU_RESET");
+            break;
+        case ResetReason::SW_CPU_RESET: /**<12, Software reset CPU*/
+            Serial.println("SW_CPU_RESET");
+            break;
+        case ResetReason::RTCWDT_CPU_RESET: /**<13, RTC Watch dog Reset CPU*/
+            Serial.println("RTCWDT_CPU_RESET");
+            break;
+        case ResetReason::EXT_CPU_RESET: /**<14, for APP CPU, reseted by PRO CPU*/
+            Serial.println("EXT_CPU_RESET");
+            break;
+        case ResetReason::RTCWDT_BROWN_OUT_RESET: /**<15, Reset when the vdd voltage is not stable*/
+            Serial.println("RTCWDT_BROWN_OUT_RESET");
+            break;
+        case ResetReason::RTCWDT_RTC_RESET: /**<16, RTC Watch dog reset digital core and rtc module*/
+            Serial.println("RTCWDT_RTC_RESET");
+            break;
+        default:
+            Serial.println("NO_MEAN");
     }
 }
 
@@ -110,7 +109,7 @@ void safeBoot()
 
     bool crashed = false;
 
-    if (hasCrashed(reset_cpu0) || hasCrashed(reset_cpu1)) // esp crashed! safe mode
+    if (hasCrashed(reset_cpu0) || hasCrashed(reset_cpu1))  // esp crashed! safe mode
     {
         Serial << "ESP CRASHED!"
                << endl
